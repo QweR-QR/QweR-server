@@ -20,7 +20,7 @@ public class GptController {
     @GetMapping("/content")
     public String getSummarizeByGpt(@RequestParam String model, @RequestBody HashMap<String, String> content) {
         log.info("Call getSummarizeByGpt.");
-        log.info("getSummarizeByGpt content={}", content.get("content"));
+        //log.info("getSummarizeByGpt content={}", content.get("content"));
 
         //TODO: flask 서버로부터 content를 받아서 client에 쏴줘야 함.
         GptChatResponse gptChatResponse = gptService.getGPTChatResponse(content.get("content"));
