@@ -14,5 +14,4 @@ spring:
 
 server:
   address: 203.252.166.255
-  port: 8080
-
+  port: 8081
