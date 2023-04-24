@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class UrlController {
 
-    private static final String TEXT_SERVER_ENDPOINT = "http://127.0.0.1:5050/extract";
+    private static final String TEXT_SERVER_ENDPOINT = "http://203.252.166.225:5000/extract";
 
     @GetMapping("/summary")
     public String getUrl(@RequestBody HashMap<String, String> url, @RequestParam String[] secondFilteringWords) {
