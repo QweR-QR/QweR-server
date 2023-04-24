@@ -13,5 +13,5 @@ spring:
     include: auth
 
 server:
-  address: 172.17.255.255
+  address: 203.252.166.255
   port: 8080
