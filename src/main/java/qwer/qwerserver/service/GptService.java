@@ -23,8 +23,19 @@ public class GptService {
     @Value("${gpt.api-key}")
     private String apiKey;
 
+    public String getSummarizeByGpt(String content) {
+        log.info("Call getSummarizeByGpt.");
+        //log.info("getSummarizeByGpt content={}", content.get("content"));
 
-    public GptChatResponse getGPTChatResponse(String content) {
+        GptChatResponse gptChatResponse = getGPTChatResponse(content);
+
+        return gptChatResponse.getChoices().get(0).getMessage().getContent();
+    }
+
+    /*
+
+     */
+    private GptChatResponse getGPTChatResponse(String content) {
         log.info("getGPTChatResponse content={}", content);
 
         HttpHeaders headers = new HttpHeaders();
