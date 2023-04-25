@@ -12,5 +12,4 @@ public class UrlPostRequestDto {
 
     private String url;
     private List<String> secondFilteringWords;
-
 }

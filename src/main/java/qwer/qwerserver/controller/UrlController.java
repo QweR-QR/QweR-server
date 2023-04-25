@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,7 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/summary")
-    public UrlPostResponseDto getUrl(@RequestBody UrlPostRequestDto request) {
+    public UrlPostResponseDto getUrl(@RequestBody UrlPostRequestDto request, @PathVariable String model) {
 
         String url = request.getUrl();
         Map<String, String> urlMap = new HashMap<>();
@@ -55,7 +56,8 @@ public class UrlController {
 
         log.info("추출된 텍스트={}", content);
 
-        //gpt로 요약하기
+        //TODO: 후에 KoBART Model이 추가되면 model값을 통해 gpt와 KoBART 둘 중 하나로 요약하는걸 분기 처리
+        log.info("model={}", model);
         String summarizeByGpt = gptService.getSummarizeByGpt(content);
 
         return urlService.getUrlResponse(summarizeByGpt);
