@@ -36,7 +36,7 @@ public class GptService {
 
      */
     private GptChatResponse getGPTChatResponse(String content) {
-        log.info("getGPTChatResponse content={}", content);
+        //log.info("getGPTChatResponse content={}", content);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json;charset=utf-8");
