@@ -34,7 +34,7 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/summary")
-    public UrlPostResponseDto getUrl(@RequestBody UrlPostRequestDto request, @PathVariable String model) {
+    public UrlPostResponseDto getUrl(@RequestBody UrlPostRequestDto request, @RequestParam String model) {
 
         String url = request.getUrl();
         Map<String, String> urlMap = new HashMap<>();
