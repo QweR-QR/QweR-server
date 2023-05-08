@@ -53,7 +53,7 @@ public class UrlController {
         ResponseEntity<Map> responseEntity =  rt.exchange(TEXT_SERVER_ENDPOINT, HttpMethod.POST, requestEntity, Map.class);
         String content = (String) responseEntity.getBody().get("content");
 
-        log.info("추출된 텍스트={}", content);
+        //log.info("추출된 텍스트={}", content);
 
         //TODO: 후에 KoBART Model이 추가되면 model값을 통해 gpt와 KoBART 둘 중 하나로 요약하는걸 분기 처리
         log.info("model={}", model);
@@ -62,7 +62,7 @@ public class UrlController {
         String summarizeByGpt = gptService.getSummarizeByGpt(content);
         LocalDateTime end = LocalDateTime.now();
 
-        log.info("GPT 요약 시간 : {}초", Duration.between(start, end).toSeconds());
+        log.info("GPT Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
 
         return urlService.getUrlResponse(summarizeByGpt);
     }
