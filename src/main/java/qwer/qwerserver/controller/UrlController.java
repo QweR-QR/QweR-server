@@ -1,17 +1,16 @@
 package qwer.qwerserver.controller;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +57,12 @@ public class UrlController {
 
         //TODO: 후에 KoBART Model이 추가되면 model값을 통해 gpt와 KoBART 둘 중 하나로 요약하는걸 분기 처리
         log.info("model={}", model);
+
+        LocalDateTime start = LocalDateTime.now();
         String summarizeByGpt = gptService.getSummarizeByGpt(content);
+        LocalDateTime end = LocalDateTime.now();
+
+        log.info("GPT 요약 시간 : {}초", Duration.between(start, end).toSeconds());
 
         return urlService.getUrlResponse(summarizeByGpt);
     }
