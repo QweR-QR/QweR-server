@@ -34,7 +34,6 @@ public class UrlController {
 
     @PostMapping("/summary")
     public UrlPostResponseDto getUrl(@RequestBody UrlPostRequestDto request, @RequestParam String model) {
-
         String url = request.getUrl();
         Map<String, String> urlMap = new HashMap<>();
         urlMap.put("url", url);
@@ -61,10 +60,12 @@ public class UrlController {
         LocalDateTime start = LocalDateTime.now();
         String summarizeByGpt = gptService.getSummarizeByGpt(content);
         LocalDateTime end = LocalDateTime.now();
-
         log.info("GPT Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
 
-        return urlService.getUrlResponse(summarizeByGpt);
+        //요약한 content가 2차 필터링을 통과했는지 여부
+        boolean secondFilteringPass = urlService.isSecondFilteringPassed(content, secondFilteringWords);
+
+        return urlService.getUrlResponse(summarizeByGpt, secondFilteringPass);
     }
 
 }
