@@ -11,5 +11,5 @@ public class UrlPostResponseDto {
 
     private String message;
     private String content;
-    private boolean isPassed;
+    private boolean passed;
 }
