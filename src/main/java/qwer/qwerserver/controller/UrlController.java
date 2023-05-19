@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import qwer.qwerserver.dto.UrlPostRequestDto;
 import qwer.qwerserver.dto.UrlPostResponseDto;
+import qwer.qwerserver.service.BartService;
 import qwer.qwerserver.service.GptService;
 import qwer.qwerserver.service.UrlService;
 
@@ -31,6 +32,7 @@ public class UrlController {
 
     private final GptService gptService;
     private final UrlService urlService;
+    private final BartService bartService;
 
     @PostMapping("/summary")
     public UrlPostResponseDto getUrl(@RequestBody UrlPostRequestDto request, @RequestParam String model) {
@@ -57,15 +59,24 @@ public class UrlController {
         //TODO: 후에 KoBART Model이 추가되면 model값을 통해 gpt와 KoBART 둘 중 하나로 요약하는걸 분기 처리
         log.info("model={}", model);
 
-        LocalDateTime start = LocalDateTime.now();
-        String summarizeByGpt = gptService.getSummarizeByGpt(content);
-        LocalDateTime end = LocalDateTime.now();
-        log.info("GPT Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
+        String summarize = "";
+        if (model.equals("gpt")) {
+            LocalDateTime start = LocalDateTime.now();
+            summarize = gptService.getSummarizeByGpt(content);
+            LocalDateTime end = LocalDateTime.now();
+            log.info("GPT Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
+        } else if (model.equals("bart")) {
+            LocalDateTime start = LocalDateTime.now();
+            summarize = bartService.getSummarizeByBart(content);
+            LocalDateTime end = LocalDateTime.now();
+            log.info("KoBART Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
+        }
+
 
         //요약한 content가 2차 필터링을 통과했는지 여부
         boolean secondFilteringPass = urlService.isSecondFilteringPassed(content, secondFilteringWords);
 
-        return urlService.getUrlResponse(summarizeByGpt, secondFilteringPass);
+        return urlService.getUrlResponse(summarize, secondFilteringPass);
     }
 
 }
