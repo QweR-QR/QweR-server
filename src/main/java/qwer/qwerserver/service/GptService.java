@@ -40,7 +40,7 @@ public class GptService {
         List<Messages> messagesList = new ArrayList<>();
         Messages messages = new Messages();
         messages.setRole("user");
-        messages.setContent("아래 content를 한국어로 요약해줘.\n" + content);
+        messages.setContent("아래 content를 한국어로 500자 이내로 요약해줘.\n" + content);
         messagesList.add(messages);
 
         GptChatRequest request = new GptChatRequest();
