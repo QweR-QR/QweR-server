@@ -63,6 +63,7 @@ public class UrlController {
         if (model.equals("gpt")) {
             if (content.length() >= 4000) {
                 content = content.substring(0, 4000);
+                log.info("Over Length 4000");
             }
             LocalDateTime start = LocalDateTime.now();
             summarize = gptService.getSummarizeByGpt(content);
@@ -71,6 +72,7 @@ public class UrlController {
         } else if (model.equals("bart")) {
             if (content.length() >= 512) {
                 content = content.substring(0, 500);
+                log.info("Over Length 512");
             }
             LocalDateTime start = LocalDateTime.now();
             summarize = bartService.getSummarizeByBart(content);
