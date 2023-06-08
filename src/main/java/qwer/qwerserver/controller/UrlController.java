@@ -61,18 +61,22 @@ public class UrlController {
 
         String summarize = "";
         if (model.equals("gpt")) {
+            if (content.length() >= 4000) {
+                content = content.substring(0, 4000);
+            }
             LocalDateTime start = LocalDateTime.now();
             summarize = gptService.getSummarizeByGpt(content);
             LocalDateTime end = LocalDateTime.now();
             log.info("GPT Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
         } else if (model.equals("bart")) {
+            if (content.length() >= 512) {
+                content = content.substring(0, 500);
+            }
             LocalDateTime start = LocalDateTime.now();
             summarize = bartService.getSummarizeByBart(content);
             LocalDateTime end = LocalDateTime.now();
             log.info("KoBART Summarize Time : {}seconds", Duration.between(start, end).toSeconds());
         }
-
-
         //요약한 content가 2차 필터링을 통과했는지 여부
         boolean secondFilteringPass = urlService.isSecondFilteringPassed(content, secondFilteringWords);
 
