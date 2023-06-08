@@ -63,9 +63,9 @@ public class UrlController {
 
         String summarize = "";
         if (model.equals("gpt")) {
-            if (content.length() >= 3500) {
-                content = content.substring(0, 3500);
-                log.info("Over Length 3500");
+            if (content.length() >= 3000) {
+                content = content.substring(0, 3000);
+                log.info("Over Length 3000");
             }
             LocalDateTime start = LocalDateTime.now();
             summarize = gptService.getSummarizeByGpt(content);
