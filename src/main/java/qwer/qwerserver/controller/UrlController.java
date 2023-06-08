@@ -41,7 +41,9 @@ public class UrlController {
         urlMap.put("url", url);
 
         List<String> secondFilteringWords = request.getSecondFilteringWords();
-        log.info("secondFilteringWord={}", secondFilteringWords.get(0));
+        if (secondFilteringWords.size() != 0) {
+            log.info("secondFilteringWord={}", secondFilteringWords.get(0));
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json;charset=utf-8");
